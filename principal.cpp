@@ -1,5 +1,7 @@
 #include "principal.h"
 #include "ui_principal.h"
+#include <QMessageBox>
+#include "factura.h"
 
 Principal::Principal(QWidget *parent)
     : QMainWindow(parent)
@@ -27,9 +29,10 @@ Principal::~Principal()
     delete ui;
 }
 
-
 void Principal::on_cmdAgregar_released()
 {
+    // Valida que el nombre no esté vacío.
+    //verificacion();
     //Obtener datos de la GUI.
     int index = ui->inProducto->currentIndex();
     Producto *p = m_productos.at(index);
@@ -70,4 +73,46 @@ void Principal::calculr(float stProducto)
     ui->outSubtotal->setText(QString::number(m_subtotal, 'f',2));
     ui->outIva->setText(QString::number(IVA, 'f',2));
     ui->outTotal->setText(QString::number(total,'f',2));
+}
+
+void Principal::verificacion()
+{
+    // Obtener el nombre
+    QString nombre = ui->inNombre->text();
+    QString cedula = ui->inCedula->text();
+    // Valida que el nombre no esté vacío
+    if (cedula.isEmpty()){
+        QMessageBox::warning(this, "Tiendad","No has proporcionado el numero de cedula del cliente");
+        return;
+    }else if(nombre.isEmpty()){
+        QMessageBox::warning(this, "Tiendad","No has proporcionado el nombre del cliente");
+        return;
+    }
+}
+
+void Principal::on_pushButton_clicked()
+{
+    Factura *facturaI = new Factura(this);
+    facturaI->setNombre(ui->inNombre->text());
+    facturaI->setCedula(ui->inCedula->text());
+    facturaI->setTelefono(ui->inTelefono->text());
+    facturaI->setE_mail(ui->inCorreo->text());
+    //facturaI->setDirecion(ui->inDireccion);
+    //facturaI->setDetalle(ui->outDetalle);
+    facturaI->setSubtotal(ui->outSubtotal->text());
+    facturaI->setIVA(ui->outIva->text());
+    facturaI->setTotal(ui->outTotal->text());
+    facturaI->show();
+}
+
+void Principal::on_pushButton_2_released()
+{
+    //ui->outDetalle->clear();
+    ui->inCedula->setText("");
+    ui->inNombre->setText("");
+    ui->inTelefono->setText("");
+    ui->inCorreo->setText("");
+    ui->inDireccion->setText("");
+    ui->outTotal->setNum(0);
+    ui->outSubtotal->setNum(0);
 }

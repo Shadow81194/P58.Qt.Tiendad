@@ -22,10 +22,17 @@ private slots:
 
     void on_inProducto_currentIndexChanged(int index);
 
+    void on_pushButton_clicked();
+
+
+
+    void on_pushButton_2_released();
+
 private:
     Ui::Principal *ui;
     QList<Producto*> m_productos;
     float m_subtotal;
     void calculr(float stProducto);
+    void verificacion();
 };
 #endif // PRINCIPAL_H

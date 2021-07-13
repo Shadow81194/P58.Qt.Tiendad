@@ -10,20 +10,26 @@ CONFIG += c++11
 
 SOURCES += \
     cliente.cpp \
+    factura.cpp \
     main.cpp \
     principal.cpp \
     producto.cpp \
 
 HEADERS += \
     cliente.h \
+    factura.h \
     principal.h \
     producto.h \
 
 
 FORMS += \
+    factura.ui \
     principal.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    imgen.qrc
